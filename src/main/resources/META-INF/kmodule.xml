@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+    <kbase name="vendorRegistrationKbase" packages="com.example.vendorregistration">
+        <ksession name="vendorRegistrationSession"/>
+    </kbase>
+</kmodule>

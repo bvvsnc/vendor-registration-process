@@ -1,0 +1,40 @@
+{
+  "name": "QA Review",
+  "priority": "1",
+  "description": "Review vendor technical capabilities and compliance",
+  "formProperties": [
+    {
+      "name": "complianceCertificates",
+      "label": "Compliance Certificates",
+      "type": "string",
+      "readable": true,
+      "writable": false
+    },
+    {
+      "name": "technicalCapabilityScore",
+      "label": "Technical Capability Score (1-10)",
+      "type": "integer",
+      "readable": true,
+      "writable": true,
+      "min": 1,
+      "max": 10
+    },
+    {
+      "name": "qaComments",
+      "label": "QA Comments",
+      "type": "string",
+      "readable": true,
+      "writable": true
+    },
+    {
+      "name": "approved",
+      "label": "Approval Decision",
+      "type": "radio",
+      "values": [
+        {"value": "true", "text": "Approve"},
+        {"value": "false", "text": "Reject"}
+      ],
+      "required": true
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+                   xmlns:drools="http://www.jboss.org/drools"
+                   id="_vendor_registration" 
+                   targetNamespace="http://www.jboss.org/drools">
+  
+  <bpmn2:process id="vendor.registration" name="Vendor Registration Process" isExecutable="true">
+    
+    <!-- Variables -->
+    <bpmn2:property id="vendorRequest" itemSubjectRef="_vendorRequestItem"/>
+    <bpmn2:property id="procurementApproved" type="Boolean"/>
+    <bpmn2:property id="qaApproved" type="Boolean"/>
+    <bpmn2:property id="financeApproved" type="Boolean"/>
+    
+    <!-- Start Event -->
+    <bpmn2:startEvent id="start" name="Vendor Submission">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    
+    <!-- System Validation -->
+    <bpmn2:scriptTask id="systemValidation" name="System Validation" scriptFormat="http://www.java.com/java">
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+      <bpmn2:script><![CDATA[
+        System.out.println("Validating basic fields and documents");
+        // Add validation logic here
+      ]]></bpmn2:script>
+    </bpmn2:scriptTask>
+    
+    <!-- Procurement Review -->
+    <bpmn2:userTask id="procurementReview" name="Procurement Review">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:ioSpecification>
+        <bpmn2:dataInput id="procurementReviewInput" name="vendorRequest"/>
+        <bpmn2:dataOutput id="procurementReviewOutput" name="procurementApproved"/>
+        <bpmn2:inputSet>
+          <bpmn2:dataInputRefs>procurementReviewInput</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet>
+          <bpmn2:dataOutputRefs>procurementReviewOutput</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:potentialOwner>
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression>ProcurementOfficer</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    
+    <!-- QA Review -->
+    <bpmn2:userTask id="qaReview" name="QA Review">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:ioSpecification>
+        <bpmn2:dataInput id="qaReviewInput" name="vendorRequest"/>
+        <bpmn2:dataOutput id="qaReviewOutput" name="qaApproved"/>
+        <bpmn2:inputSet>
+          <bpmn2:dataInputRefs>qaReviewInput</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet>
+          <bpmn2:dataOutputRefs>qaReviewOutput</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:potentialOwner>
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression>QAOfficer</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    
+    <!-- Finance Review -->
+    <bpmn2:userTask id="financeReview" name="Finance Review">
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:ioSpecification>
+        <bpmn2:dataInput id="financeReviewInput" name="vendorRequest"/>
+        <bpmn2:dataOutput id="financeReviewOutput" name="financeApproved"/>
+        <bpmn2:inputSet>
+          <bpmn2:dataInputRefs>financeReviewInput</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet>
+          <bpmn2:dataOutputRefs>financeReviewOutput</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:potentialOwner>
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression>FinanceOfficer</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    
+    <!-- Final Approval -->
+    <bpmn2:scriptTask id="finalApproval" name="Final Approval" scriptFormat="http://www.java.com/java">
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+      <bpmn2:script><![CDATA[
+        System.out.println("Vendor approved. Sending confirmation and granting portal access");
+        // Add notification and access granting logic here
+      ]]></bpmn2:script>
+    </bpmn2:scriptTask>
+    
+    <!-- End Event -->
+    <bpmn2:endEvent id="end" name="Vendor Approved">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+    </bpmn2:endEvent>
+    
+    <!-- Sequence Flows -->
+    <bpmn2:sequenceFlow id="SequenceFlow_1" sourceRef="start" targetRef="systemValidation"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" sourceRef="systemValidation" targetRef="procurementReview"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" sourceRef="procurementReview" targetRef="qaReview"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="qaReview" targetRef="financeReview"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" sourceRef="financeReview" targetRef="finalApproval"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" sourceRef="finalApproval" targetRef="end"/>
+    
+  </bpmn2:process>
+  
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <!-- Diagram layout would go here -->
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

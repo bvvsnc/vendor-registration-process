@@ -1,0 +1,45 @@
+{
+  "name": "Finance Review",
+  "priority": "1",
+  "description": "Review vendor financial documents and payment terms",
+  "formProperties": [
+    {
+      "name": "bankDetails",
+      "label": "Bank Details",
+      "type": "string",
+      "readable": true,
+      "writable": false
+    },
+    {
+      "name": "taxId",
+      "label": "Tax ID",
+      "type": "string",
+      "readable": true,
+      "writable": false
+    },
+    {
+      "name": "paymentTerms",
+      "label": "Payment Terms",
+      "type": "string",
+      "readable": true,
+      "writable": true
+    },
+    {
+      "name": "financeComments",
+      "label": "Finance Comments",
+      "type": "string",
+      "readable": true,
+      "writable": true
+    },
+    {
+      "name": "approved",
+      "label": "Approval Decision",
+      "type": "radio",
+      "values": [
+        {"value": "true", "text": "Approve"},
+        {"value": "false", "text": "Request Changes"}
+      ],
+      "required": true
+    }
+  ]
+}

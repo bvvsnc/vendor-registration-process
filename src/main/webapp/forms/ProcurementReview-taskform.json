@@ -1,0 +1,52 @@
+{
+  "name": "Procurement Review",
+  "priority": "1",
+  "description": "Review vendor details for procurement approval",
+  "formProperties": [
+    {
+      "name": "companyName",
+      "label": "Company Name",
+      "type": "string",
+      "readable": true,
+      "writable": false
+    },
+    {
+      "name": "sector",
+      "label": "Sector",
+      "type": "string",
+      "readable": true,
+      "writable": false
+    },
+    {
+      "name": "category",
+      "label": "Category",
+      "type": "string",
+      "readable": true,
+      "writable": false
+    },
+    {
+      "name": "yearsExperience",
+      "label": "Years of Experience",
+      "type": "integer",
+      "readable": true,
+      "writable": false
+    },
+    {
+      "name": "comments",
+      "label": "Comments",
+      "type": "string",
+      "readable": true,
+      "writable": true
+    },
+    {
+      "name": "approved",
+      "label": "Approval Decision",
+      "type": "radio",
+      "values": [
+        {"value": "true", "text": "Approve"},
+        {"value": "false", "text": "Reject"}
+      ],
+      "required": true
+    }
+  ]
+}

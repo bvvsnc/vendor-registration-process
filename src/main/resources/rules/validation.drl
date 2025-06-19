@@ -1,0 +1,17 @@
+package com.example.vendorregistration
+
+import com.example.vendorregistration.VendorRequest
+
+rule "Validate KYC Documents"
+when
+    $request : VendorRequest( taxId == null || taxId == "" )
+then
+    throw new RuntimeException("Tax ID is required");
+end
+
+rule "Validate Bank Details"
+when
+    $request : VendorRequest( bankDetails == null || bankDetails == "" )
+then
+    throw new RuntimeException("Bank details are required");
+end
